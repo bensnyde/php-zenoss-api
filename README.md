@@ -8,7 +8,7 @@ For quick and easy integration of Zenoss Network Monitoring into your applicatio
 Tested on Zenoss v3.2
 
 TO DO:
--Validate $deviceURI + $interface parameters
+-Validate $deviceURI + $interface parameters<br />
 -The fetch Zenoss RRD image function leaves orphaned graphics in the $tmp directory to prevent concurrent fetch request issues. 
 -Add exception error handling and verbosity to zQuery method
 
