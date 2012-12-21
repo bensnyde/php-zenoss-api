@@ -1,19 +1,21 @@
 php-zenoss
 ==========
 
-PHP XMLRPC wrapper for Zenoss by Benton Snyder
+<h3>PHP XMLRPC wrapper for Zenoss by Benton Snyder</h3>
 
-For quick and easy integration of Zenoss Network Monitoring into your applications. 
+<p>For quick and easy integration of Zenoss Network Monitoring into your applications.</p>
 
-Tested on Zenoss v3.2
+<p>Tested on Zenoss v3.2</p>
 
-TO DO:
--Validate $deviceURI + $interface parameters<br />
--The fetch Zenoss RRD image function leaves orphaned graphics in the $tmp directory to prevent concurrent fetch request issues. 
--Add exception error handling and verbosity to zQuery method
+<h4>TO DO</h4>
+<ul>
+ <li>Validate $deviceURI + $interface parameters</li>
+ <li>The fetch Zenoss RRD image function leaves orphaned graphics in the $tmp directory to prevent concurrent fetch request issues.</li>
+ <li>Add exception error handling and verbosity to zQuery method</li>
+</ul>
 
-Usage:
+<h4>Usage</h4>
 
-require('zenoss.php');
-$zenoss = new Zenoss('192.168.1.10', 'admin', 'password');
-var_dump($zenoss->getDevices());
+ require('zenoss.php');<br />
+ $zenoss = new Zenoss('192.168.1.10', 'admin', 'password');<br />
+ var_dump($zenoss->getDevices());<br />
