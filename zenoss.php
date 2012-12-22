@@ -1,5 +1,20 @@
 <?php
 
+/**
+ * Zenoss XMLRPC API Wrapper class
+ *
+ * This is an easy interface for fetching data from your Zenoss Network Monitoring solution
+ * into your own application. The Zenoss API has much more functionality that is not implemented
+ * here but could be easily added. 
+ *
+ * @category   ZenossWrapper
+ * @package    Zenoss
+ * @author     Benton Snyder <noumenaldesigns@gmail.com>
+ * @copyright  2012 Noumenal Designs
+ * @license    WTFPL
+ * @link       http://www.noumenaldesigns.com
+ */
+ 
 class Zenoss
 {
         private $tmp;
@@ -14,12 +29,13 @@ class Zenoss
         * Public constructor
         *
         * @access       public
-        * @param
+        * @param        str, str, str, str, str, str
         * @return
         */
         function __construct($address,$username,$password,$port='8080',$tmp='/tmp/',$protocol='http')
         {
                 parent::__construct();
+                
                 $this->address = $address;
                 $this->username = $username;
                 $this->password = $password;
@@ -33,7 +49,7 @@ class Zenoss
          * Queries Zenoss for requested data
          *
          * @access      private
-         * @param       array, string
+         * @param       array, str
          * @return      json
          */
         private function zQuery(array $data, $uri)
@@ -60,7 +76,7 @@ class Zenoss
          * Retrieves a listing of Zenoss Device Collectors
          *
          * @access      public
-         * @param       string
+         * @param       str
          * @return      json
          */
         public function getDeviceCollectors($deviceURI)
@@ -81,7 +97,7 @@ class Zenoss
          * Retrieves listing of Zenoss events for specified device
          *
          * @access      public
-         * @param       string, *int, *int, *string, *string
+         * @param       str, *int, *int, *str, *str
          * @return      json
          */
         public function getDeviceEvents($deviceURI, $start=0, $limit=100, $sort="severity", $dir="DESC")
@@ -121,11 +137,12 @@ class Zenoss
          * Retrieves listing of components for specified Zenoss Device
          *
          * @access      public
-         * @param       string, *int, *int
+         * @param       str, *int, *int
          * @return      json
          */
         public function getDeviceComponents($deviceURI, $start=0, $limit=50)
         {
+                // validation
                 if(!is_int($start) || !is_int($limit))
                         return false;
 
@@ -153,7 +170,7 @@ class Zenoss
          * Retrieves Zenoss device details
          *
          * @access      public
-         * @param       string
+         * @param       str
          * @return      json
          */
         public function getDeviceInfo($deviceURI)
@@ -218,11 +235,12 @@ class Zenoss
          * Retrieves URL's for Zenoss Device Interface RRD graphs
          *
          * @access      public
-         * @param       string, string, *int
+         * @param       str, str, *int
          * @return      json
          */
         public function getDeviceInterfaceRRD($deviceURI, $interface, $drange = 129600)
         {
+                // validation
                 if(!is_int($drange))
                         return false;
 
@@ -245,7 +263,7 @@ class Zenoss
          * Retrieves details on specified Zenoss Device Interface
          *
          * @access      public
-         * @param       string, string
+         * @param       str, str
          * @return      json
          */
         public function getDeviceInterfaceDetails($deviceURI, $interface)
@@ -273,6 +291,7 @@ class Zenoss
          */
         function fetchZenossGraphImage($url)
         {
+                // create randomized graphic file in $tmp
                 $filename = "zenoss_".mt_rand(1000,100000000).'.png';
                 $fp = fopen($this->tmp.$filename, "wb");
 
