@@ -10,12 +10,12 @@ php-zenoss
 <h4>TO DO</h4>
 <ul>
  <li>Validate $deviceURI + $interface parameters</li>
- <li>The fetch Zenoss RRD image function leaves orphaned graphics in the $tmp directory to prevent concurrent fetch request issues.</li>
- <li>Add exception error handling and verbosity to zQuery method</li>
+ <li>fetchZenossGraphImage() leaves orphaned graphics in the $tmp directory to prevent concurrent fetch request issues.</li>
+ <li>Add exception error handling and verbosity to zQuery()</li>
 </ul>
 
 <h4>Usage</h4>
 
  require('zenoss.php');<br />
  $zenoss = new Zenoss('192.168.1.10', 'admin', 'password');<br />
- var_dump($zenoss->getDevices());<br />
+ $devices = $zenoss->getDevices();<br />
