@@ -1,4 +1,4 @@
-php-zenoss
+php-zenoss-api
 ==========
 
 <h3>PHP wrapper for Zenoss XMLRPC API</h3>
