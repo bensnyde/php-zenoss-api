@@ -1,7 +1,7 @@
 php-zenoss-api
 ==========
 
-<h3>PHP wrapper for Zenoss XMLRPC API</h3>
+<h3>Zenoss XMLRPC API PHP Library</h3>
 
 <p>For quick and easy integration of <a href="http://www.zenoss.com" alt="Zenoss">Zenoss Network Monitoring</a> into your applications.</p>
 
