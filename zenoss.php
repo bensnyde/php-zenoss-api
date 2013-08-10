@@ -1,16 +1,15 @@
 <?php
 
 /**
- * Zenoss XMLRPC API Wrapper class
+ * Zenoss XMLRPC API Library
  *
- * This is an easy interface for fetching data from your Zenoss Network Monitoring solution
- * into your own application. The Zenoss API has much more functionality that is not implemented
- * here but could be easily added. 
+ * This is an easy interface for interacting with your Zenoss Network Monitoring solution.
+ * The Zenoss API has much more functionality than what is implemented below. 
  *
- * @category   ZenossWrapper
+ * @category   Library
  * @package    Zenoss
  * @author     Benton Snyder <noumenaldesigns@gmail.com>
- * @copyright  2012 Noumenal Designs
+ * @copyright  2013 Noumenal Designs
  * @license    WTFPL
  * @link       http://www.noumenaldesigns.com
  */
@@ -29,7 +28,12 @@ class Zenoss
         * Public constructor
         *
         * @access       public
-        * @param        str, str, str, str, str, str
+        * @param        string $address
+        * @param        string $username
+        * @param        string $password
+        * @param        string $port
+        * @param        string $tmp
+        * @param        string $protocol
         * @return
         */
         function __construct($address,$username,$password,$port='8080',$tmp='/tmp/',$protocol='http')
@@ -49,8 +53,9 @@ class Zenoss
          * Queries Zenoss for requested data
          *
          * @access      private
-         * @param       array, str
-         * @return      json
+         * @param       array $data
+         * @param       string $uri
+         * @return      json array
          */
         private function zQuery(array $data, $uri)
         {
@@ -76,8 +81,8 @@ class Zenoss
          * Retrieves a listing of Zenoss Device Collectors
          *
          * @access      public
-         * @param       str
-         * @return      json
+         * @param       string $deviceURI
+         * @return      json array
          */
         public function getDeviceCollectors($deviceURI)
         {
@@ -97,8 +102,12 @@ class Zenoss
          * Retrieves listing of Zenoss events for specified device
          *
          * @access      public
-         * @param       str, *int, *int, *str, *str
-         * @return      json
+         * @param       string $deviceURI
+         * @param       int $start
+         * @param       int $limit
+         * @param       string $sort
+         * @param       string $dir
+         * @return      json array 
          */
         public function getDeviceEvents($deviceURI, $start=0, $limit=100, $sort="severity", $dir="DESC")
         {
@@ -137,8 +146,10 @@ class Zenoss
          * Retrieves listing of components for specified Zenoss Device
          *
          * @access      public
-         * @param       str, *int, *int
-         * @return      json
+         * @param       string $deviceURI
+         * @param       int $start
+         * @param       int $limit
+         * @return      json array
          */
         public function getDeviceComponents($deviceURI, $start=0, $limit=50)
         {
@@ -170,8 +181,8 @@ class Zenoss
          * Retrieves Zenoss device details
          *
          * @access      public
-         * @param       str
-         * @return      json
+         * @param       string $deviceURI
+         * @return      json array
          */
         public function getDeviceInfo($deviceURI)
         {
@@ -199,8 +210,11 @@ class Zenoss
          * Retrieves listing of Zenoss Devices
          *
          * @access      public
-         * @param       *int, *int, *str, *str
-         * @return      json
+         * @param       int $start
+         * @param       int $limit
+         * @param       string $sort
+         * @param       string $dir
+         * @return      json array
          */
         public function getDevices($start=0, $limit=100, $sort="name", $dir="ASC")
         {
@@ -235,8 +249,10 @@ class Zenoss
          * Retrieves URL's for Zenoss Device Interface RRD graphs
          *
          * @access      public
-         * @param       str, str, *int
-         * @return      json
+         * @param       string $deviceURI
+         * @param       string $interface
+         * @param       int $drange
+         * @return      json array
          */
         public function getDeviceInterfaceRRD($deviceURI, $interface, $drange = 129600)
         {
@@ -263,8 +279,9 @@ class Zenoss
          * Retrieves details on specified Zenoss Device Interface
          *
          * @access      public
-         * @param       str, str
-         * @return      json
+         * @param       string $deviceURI
+         * @param       string $interface
+         * @return      json array
          */
         public function getDeviceInterfaceDetails($deviceURI, $interface)
         {
@@ -280,39 +297,5 @@ class Zenoss
                 $json_main['data'] = array($json_data);
 
                 return $this->zQuery($json_main, $deviceURI.'/device_router');
-        }
-
-        /**
-         * Downloads specified image
-         *
-         * @access      public
-         * @param       string, string
-         * @return      boolean
-         */
-        function fetchZenossGraphImage($url)
-        {
-                // create randomized graphic file in $tmp
-                $filename = "zenoss_".mt_rand(1000,100000000).'.png';
-                $fp = fopen($this->tmp.$filename, "wb");
-
-                // fetch authorization cookie
-                $ch = curl_init("{$this->protocol}://{$this->address}:{$this->port}/zport/acl_users/cookieAuthHelper/login");
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_USERPWD, "$this->username:$this->password");
-                curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8'));
-                curl_exec($ch);
-
-                // fetch image
-                curl_setopt($ch, CURLOPT_URL, "{$this->protocol}://{$this->address}:{$this->port}{$url}");
-                curl_setopt($ch, CURLOPT_FILE, $fp);
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-                curl_exec($ch);
-
-                curl_close($ch);
-                fclose($fp);
-
-                return $filename;
         }
 }
