@@ -12,7 +12,6 @@ php-zenoss-api
 <h4>TO DO</h4>
 <ul>
  <li>Validate $deviceURI + $interface parameters</li>
- <li>fetchZenossGraphImage() leaves orphaned graphics in the $tmp directory to prevent concurrent fetch request issues.</li>
  <li>Add exception error handling and verbosity to zQuery()</li>
 </ul>
 
