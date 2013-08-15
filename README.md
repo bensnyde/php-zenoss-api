@@ -5,9 +5,9 @@ Zenoss XMLRPC API PHP Library
 
 For quick and easy integration of Zenoss Network Monitoring <http://www.zenoss.com>.
 
-@filename zenoss.php
-@author Benton Snyder <introspectr3@gmail.com>
-@link <http://noumenaldesigns.com>
+@filename zenoss.php<br />
+@author Benton Snyder <introspectr3@gmail.com><br />
+@link <http://noumenaldesigns.com><br />
 
 Tested on Zenoss 3.2, 4.2
 
