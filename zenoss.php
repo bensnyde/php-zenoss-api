@@ -39,7 +39,7 @@ class Zenoss
         function __construct($address,$username,$password,$port='8080',$tmp='/tmp/',$protocol='http')
         {
                 parent::__construct();
-                
+
                 $this->address = $address;
                 $this->username = $username;
                 $this->password = $password;
@@ -59,6 +59,10 @@ class Zenoss
          */
         private function zQuery(array $data, $uri)
         {
+                // inject common variables to data container
+                $data['tid'] = 1;
+                $data['type'] = "rpc";
+
                 // fetch authorization cookie
                 $ch = curl_init("{$this->protocol}://{$this->address}:{$this->port}/zport/acl_users/cookieAuthHelper/login");
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -72,8 +76,8 @@ class Zenoss
                 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
                 $result = curl_exec($ch);
 
+                // cleanup
                 curl_close($ch);
-
                 return $result;
         }
 
@@ -91,8 +95,6 @@ class Zenoss
 
                 $json_main['action'] = "DeviceRouter";
                 $json_main['method'] = "getCollectors";
-                $json_main['type'] = "rpc";
-                $json_main['tid'] = 1;
                 $json_main['data'] = $json_data;
 
                 return $this->zQuery($json_main, $deviceURI.'/device_router');
@@ -107,19 +109,10 @@ class Zenoss
          * @param       int $limit
          * @param       string $sort
          * @param       string $dir
-         * @return      json array 
+         * @return      json array
          */
         public function getDeviceEvents($deviceURI, $start=0, $limit=100, $sort="severity", $dir="DESC")
         {
-                // validation
-                if(!is_int($start) || !is_int($limit))
-                        return false;
-                if($dir!="ASC" && $dir!="DESC")
-                        return false;
-                $validSort = array("Component, Count, Device, eventClass, firstTime, lastTime, severity, summary");
-                if(!in_array($validSort, $sort))
-                        return false;
-
                 $json_params = array();
                 $json_data = array();
                 $json_main = array();
@@ -136,8 +129,6 @@ class Zenoss
                 $json_main['action'] = "EventsRouter";
                 $json_main['method'] = "query";
                 $json_main['data'] = array($json_data);
-                $json_main['tid'] = 1;
-                $json_main['type'] = "rpc";
 
                 return $this->zQuery($json_main, $deviceURI.'/evconsole_router');
         }
@@ -153,10 +144,6 @@ class Zenoss
          */
         public function getDeviceComponents($deviceURI, $start=0, $limit=50)
         {
-                // validation
-                if(!is_int($start) || !is_int($limit))
-                        return false;
-
                 $json_keys = array();
                 $json_data = array();
                 $json_main = array();
@@ -170,8 +157,6 @@ class Zenoss
                 $json_main['action'] = "DeviceRouter";
                 $json_main['method'] = "getComponents";
                 $json_main['data'] = array($json_data);
-                $json_main['tid'] = 1;
-                $json_main['type'] = "rpc";
 
                 return $this->zQuery($json_main, $deviceURI.'/device_router');
         }
@@ -199,9 +184,7 @@ class Zenoss
 
                 $json_main['action'] = "DeviceRouter";
                 $json_main['method'] = "getInfo";
-                $json_main['type'] = "rpc";
                 $json_main['data'] = array($json_data);
-                $json_main['tid'] = 1;
 
                 return $this->zQuery($json_main, $deviceURI.'/getSubDevices');
         }
@@ -218,14 +201,6 @@ class Zenoss
          */
         public function getDevices($start=0, $limit=100, $sort="name", $dir="ASC")
         {
-                // to do: fix sort validation
-                if(!is_int($start) || !is_int($limit))
-                        return false;
-                if($dir!="ASC" && $dir!="DESC")
-                        return false;
-                if($sort!="name")
-                        return false;
-
                 $json_params = array();
                 $json_data = array();
                 $json_main = array();
@@ -238,9 +213,7 @@ class Zenoss
 
                 $json_main['action'] = "DeviceRouter";
                 $json_main['method'] = "getDevices";
-                $json_main['type'] = "rpc";
                 $json_main['data'] = $json_data;
-                $json_main['tid'] = 1;
 
                 return $this->zQuery($json_main, '/zport/dmd/Devices/getSubDevices');
         }
@@ -254,12 +227,8 @@ class Zenoss
          * @param       int $drange
          * @return      json array
          */
-        public function getDeviceInterfaceRRD($deviceURI, $interface, $drange = 129600)
+        public function getDeviceInterfaceRRD($deviceURI, $interface, $drange=129600)
         {
-                // validation
-                if(!is_int($drange))
-                        return false;
-
                 $json_data = array();
                 $json_main = array();
 
@@ -268,8 +237,6 @@ class Zenoss
 
                 $json_main['action'] = "DeviceRouter";
                 $json_main['method'] = "getGraphDefs";
-                $json_main['type'] = "rpc";
-                $json_main['tid'] = 1;
                 $json_main['data'] = array($json_data);
 
                 return $this->zQuery($json_main, $deviceURI.'/device_router');
@@ -292,8 +259,6 @@ class Zenoss
 
                 $json_main['action'] = "DeviceRouter";
                 $json_main['method'] = "getForm";
-                $json_main['tid'] = 1;
-                $json_main['type'] = "rpc";
                 $json_main['data'] = array($json_data);
 
                 return $this->zQuery($json_main, $deviceURI.'/device_router');
