@@ -1,19 +1,15 @@
 php-zenoss-api
 ==========
 
-<h3>Zenoss XMLRPC API PHP Library</h3>
+Zenoss XMLRPC API PHP Library
 
-<p>For quick and easy integration of <a href="http://www.zenoss.com" alt="Zenoss">Zenoss Network Monitoring</a> into your applications.</p>
+For quick and easy integration of Zenoss Network Monitoring <http://www.zenoss.com>.
 
-<p>@filename zenoss.php<br />@author Benton Snyder<br />@link <a href="http://noumenaldesigns.com" alt="Noumenal Designs">http://noumenaldesigns.com</a></p>
+@filename zenoss.php
+@author Benton Snyder <introspectr3@gmail.com>
+@link <http://noumenaldesigns.com>
 
-<p>Tested on Zenoss 3.2, 4.2</p>
-
-<h4>TO DO</h4>
-<ul>
- <li>Validate $deviceURI + $interface parameters</li>
- <li>Add exception error handling and verbosity to zQuery()</li>
-</ul>
+Tested on Zenoss 3.2, 4.2
 
 <h4>Usage</h4>
 
