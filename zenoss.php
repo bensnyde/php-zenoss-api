@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Zenoss XMLRPC API Library
+ * Zenoss XMLRPC API PHP Library
  *
  * This is an easy interface for interacting with your Zenoss Network Monitoring solution.
- * The Zenoss API has much more functionality than what is implemented below. 
+ * Note, the Zenoss API has much more functionality than what is implemented below. 
  *
- * @category   Library
+ * @category   PHP Library
  * @package    Zenoss
- * @author     Benton Snyder <noumenaldesigns@gmail.com>
+ * @author     Benton Snyder <introspectr3@gmail.com>
  * @copyright  2013 Noumenal Designs
- * @license    WTFPL
- * @link       http://www.noumenaldesigns.com
+ * @license    GPLv3
+ * @website    Noumenal Designs <http://www.noumenaldesigns.com>
  */
  
 class Zenoss
