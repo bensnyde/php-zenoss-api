@@ -6,7 +6,7 @@
  * This is an easy interface for interacting with your Zenoss Network Monitoring solution.
  * Note, the Zenoss API has much more functionality than what is implemented below. 
  *
- * @category   PHP Library
+ * @category   PHP Libraries
  * @package    Zenoss
  * @author     Benton Snyder <introspectr3@gmail.com>
  * @copyright  2013 Noumenal Designs
