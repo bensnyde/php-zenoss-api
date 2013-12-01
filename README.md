@@ -10,7 +10,7 @@ For quick and easy integration of Zenoss Network Monitoring <http://www.zenoss.c
  * @author     Benton Snyder <introspectr3@gmail.com>
  * @copyright  2013 Noumenal Designs
  * @license    GPLv3
- * @website    Noumenal Designs <http://www.noumenaldesigns.com>
+ * @website    <http://www.noumenaldesigns.com>
 
 Tested on Zenoss 3.2, 4.2
 
